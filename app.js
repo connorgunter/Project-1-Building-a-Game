@@ -7,6 +7,8 @@
     // stand
     // playerTotal
     // dealerTotal
+    // playerScore
+    // dealerScore
     // wager?
     // balance?
     // winStreak?
