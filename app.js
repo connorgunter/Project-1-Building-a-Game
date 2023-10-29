@@ -17,5 +17,5 @@
     // shuffleDeck
     // dealCards
     // hitButtonEl
-    // standButtonEl
-    //
+    // standButtonEL
+    

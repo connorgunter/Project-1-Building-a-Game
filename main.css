@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(/images/BlackJack-BG.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
+.container {
+    display: grid;
+    
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.player-cards {
+    padding-bottom: 30px;
+}
