@@ -16,7 +16,6 @@ There will be another function for giving the player an option to hit or stand, 
 
 there will be another function for endgame which will end the game if the dealer or player wins
 
-
 (I might add a wagering system after the basic game if I find I have time) -> player starts with 1000, and can choose how much to wager, and if you win you will 2x your wager, if you lose, you will lose whatever you bet
 
 

@@ -17,9 +17,24 @@ body {
 .button-wrapper {
     display: flex;
     justify-content: space-evenly;
+}
 
+.stand-button {
+    border-radius: 15px;
+    padding: 10px;
+    background-color: blue;
+}
+
+.hit-button {
+    background-color: red;
+    border-radius: 15px;
+    padding: 10px;
 }
 
 .player-cards {
     padding-bottom: 30px;
+}
+
+#original-deck-container {
+    
 }
