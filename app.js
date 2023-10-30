@@ -1,81 +1,44 @@
-// Declare variables for 
-    // cards
-    // shuffledDeck?
-    // player
-    // dealer
-    // hit
-    // stand
-    // playerTotal
-    // dealerTotal
-    // playerScore
-    // dealerScore
-    // wager?
-    // balance?
-    // winStreak?
-
-let playerCount;
-let dealerCount;
+// Variable declaration
+let dealerHand = []
+let playerHand = []
 let playerScore = 0;
 let dealerScore = 0;
-const displayTwoCards = [];
 
-// functions
-    // shuffleDeck
-    // dealCards
-    // hitButtonEl
-    // standButtonEL
-    // endGame
-    // updateScore
-    
-
-
-// hit and stand 
-
+// Buttons
 const hitButtonEl = document.querySelector('.hit-button')
 const standButtonEl = document.querySelector('.stand-button')
 const newDealButton = document.querySelector('.new-deal-button')
-
 console.log("New Deal Button:", newDealButton)
 console.log("Hit Button", hitButtonEl)
 console.log("Stand Button:", standButtonEl)
-
-// event listeners
-
-hitButtonEl.addEventListener('click', handleBtnClick)
-standButtonEl.addEventListener('click', handleBtnClick)
-newDealButton.addEventListener('click', handleBtnClick)
-
+//
+// event listeners for buttons
+hitButtonEl.addEventListener('click', hitBtn)
+standButtonEl.addEventListener('click', standBtn)
+newDealButton.addEventListener('click', newDealBtn)
+//
 
 init()
-
-
-
-function handleBtnClick(event){
-    console.log(event.target.innerText)
-}
 
 function init() {
     console.log("game is running")
 }
 
-function hitBtn() {
+
+function newDealBtn(event) {
+    console.log(event.target.innerText)
 }
-
-function standBtn() {
-
-}
-
-
-
 
 function gameOver() {
 }
 
-
-function renderCards() {
-
+function updateScore() {
+    if(player === wins){
+        playerScore++;
+    } else {
+        dealerScore++
+    }
 }
-
 
 
 /*----- constants -----*/
@@ -84,21 +47,12 @@ function renderCards() {
 const suits = ['s', 'c', 'd', 'h'];
 const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A'];
 
-// Build an 'original' deck of 'card' objects used to create shuffled decks
 const originalDeck = buildOriginalDeck();
 
-/*----- app's state (variables) -----*/
 let shuffledDeck;
 
-/*----- cached element references -----*/
 const playersContainer = document.getElementById('players-container');
 const dealersContainer = document.getElementById('dealers-container');
-/*----- event listeners -----*/
-
-
-/*----- functions -----*/
-
-
 
 function buildOriginalDeck() {
   const deck = [];
@@ -115,29 +69,41 @@ function buildOriginalDeck() {
   });
   return deck;
 }
-
+// console.log(testDeck[0].value)
 function getNewShuffledDeck() {
   // Create a copy of the originalDeck (leave originalDeck untouched!)
   const tempDeck = [...originalDeck];
   let newShuffledDeck = [];
-  while (tempDeck.length - 50) {
+  while (tempDeck.length) {
     // Get a random index for a card still in the tempDeck
     const rndIdx = Math.floor(Math.random() * tempDeck.length);
     // Note the [0] after splice - this is because splice always returns an array and we just want the card object in that array
     newShuffledDeck.push(tempDeck.splice(rndIdx, 1)[0]);
-    console.log(newShuffledDeck)
+    
   }
   return newShuffledDeck;
 }
-
-
-
-function renderNewShuffledDeck() {
+// deal 2 new cards for dealer and player and render on screen //
+function dealCard() {
+    const dealCard = getNewShuffledDeck().pop()
+    return dealCard;
+ }
+function renderDealerHand() {
   // Create a copy of the originalDeck (leave originalDeck untouched!)
-  shuffledDeck = getNewShuffledDeck();
-  renderDeckInContainer(shuffledDeck, playersContainer)
-  renderDeckInContainer(shuffledDeck, dealersContainer)
+  dealerHand.push(dealCard(),dealCard())
+  renderDeckInContainer(dealerHand, dealersContainer)
+  return dealerHand
 }
+const currentDealerHand = renderDealerHand()
+
+function renderPlayerHand() {
+    playerHand.push(dealCard(), dealCard())
+    renderDeckInContainer(playerHand, playersContainer)
+    return playerHand
+}
+
+const currentPlayerHand = renderPlayerHand()
+
 
 function renderDeckInContainer(deck, container) {
   container.innerHTML = '';
@@ -152,6 +118,54 @@ function renderDeckInContainer(deck, container) {
   // }, '');
   container.innerHTML = cardsHtml;
 }
+let playerHandScore = 0
+function playerHandTotal() {
+    playerHandScore = currentPlayerHand[0].value + currentPlayerHand[1].value
+    return playerHandScore
+}
+
+console.log(playerHandTotal())
+
+function hitBtn(event) {
+    console.log(event.target.innerText)
+    if (playerHandTotal() < 21) {
+        const thirdCard = dealCard()
+        playerHand.push(thirdCard)
+        renderDeckInContainer(playerHand, playersContainer)
+        playerHandScore = playerHandTotal()
+        playerHandScore += parseInt(thirdCard.value)
+        console.log(playerHandScore)
+        return playerHandScore
+    }else {
+        console.log("Blackjack!!!")
+    }
+}
+
+function standBtn(event) {
+    console.log(event.target.innerText)
+    if (playerHandTotal() < 21) {
+
+    }
+}
 
 
-renderNewShuffledDeck();
+
+function dealerHandTotal() {
+    let dealerHandTotal = currentDealerHand[0].value + currentDealerHand[1].value
+    return dealerHandTotal
+}
+
+function compareHands() {
+    if(dealerHandTotal() <= 21 && dealerHandTotal() > playerHandTotal()){
+        console.log("Dealer Wins!")
+    } else if (dealerHandTotal() > 21) {
+        console.log("Dealer Busted! Player Wins!")
+    }else if (playerHandTotal() > 21) {
+        console.log("Player busted! Dealer Wins!")
+    } else if (playerHandTotal() <= 21 && dealerHandTotal() < playerHandTotal()){
+        console.log("Player Wins!")
+    }
+}
+console.log(compareHands())
+console.log(dealerHandTotal())
+
