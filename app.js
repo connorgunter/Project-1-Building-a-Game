@@ -164,6 +164,14 @@ function compareHands() {
         console.log("Player busted! Dealer Wins!")
     } else if (playerHandTotal() <= 21 && dealerHandTotal() < playerHandTotal()){
         console.log("Player Wins!")
+    } else if (playerHandTotal() === dealerHandTotal()){
+        console.log("Push! (Tie!)")
+    } else if (playerHandTotal() === 21 && dealerHandTotal() < 21) {
+        console.log("You got BlackJack! Player Wins!")
+    } else if (dealerHandTotal() === 21 && playerHandTotal() < 21) {
+        console.log("Dealer got BlackJack! Player Loses!")
+    } else {
+        return
     }
 }
 console.log(compareHands())
