@@ -25,6 +25,12 @@ body {
     background-color: blue;
 }
 
+.new-deal-button {
+    border-radius: 15px;
+    padding: 10px;
+    background-color: white;
+}
+
 .hit-button {
     background-color: red;
     border-radius: 15px;
@@ -36,5 +42,5 @@ body {
 }
 
 #original-deck-container {
-    
+
 }

@@ -33,16 +33,17 @@ const displayTwoCards = [];
 
 const hitButtonEl = document.querySelector('.hit-button')
 const standButtonEl = document.querySelector('.stand-button')
+const newDealButton = document.querySelector('.new-deal-button')
 
-
-console.log(hitButtonEl)
-console.log(standButtonEl)
+console.log("New Deal Button:", newDealButton)
+console.log("Hit Button", hitButtonEl)
+console.log("Stand Button:", standButtonEl)
 
 // event listeners
 
-hitButtonEl.addEventListener('click', hitBtn)
+hitButtonEl.addEventListener('click', handleBtnClick)
 standButtonEl.addEventListener('click', handleBtnClick)
-
+newDealButton.addEventListener('click', handleBtnClick)
 
 
 init()
@@ -58,7 +59,6 @@ function init() {
 }
 
 function hitBtn() {
-    shuffledDeck.push[0]
 }
 
 function standBtn() {
@@ -91,8 +91,8 @@ const originalDeck = buildOriginalDeck();
 let shuffledDeck;
 
 /*----- cached element references -----*/
-const shuffledContainer = document.getElementById('shuffled-deck-container');
-
+const playersContainer = document.getElementById('players-container');
+const dealersContainer = document.getElementById('dealers-container');
 /*----- event listeners -----*/
 
 
@@ -120,7 +120,7 @@ function getNewShuffledDeck() {
   // Create a copy of the originalDeck (leave originalDeck untouched!)
   const tempDeck = [...originalDeck];
   let newShuffledDeck = [];
-  while (tempDeck.length-50) {
+  while (tempDeck.length - 50) {
     // Get a random index for a card still in the tempDeck
     const rndIdx = Math.floor(Math.random() * tempDeck.length);
     // Note the [0] after splice - this is because splice always returns an array and we just want the card object in that array
@@ -135,7 +135,8 @@ function getNewShuffledDeck() {
 function renderNewShuffledDeck() {
   // Create a copy of the originalDeck (leave originalDeck untouched!)
   shuffledDeck = getNewShuffledDeck();
-  renderDeckInContainer(shuffledDeck, shuffledContainer)
+  renderDeckInContainer(shuffledDeck, playersContainer)
+  renderDeckInContainer(shuffledDeck, dealersContainer)
 }
 
 function renderDeckInContainer(deck, container) {
