@@ -23,24 +23,33 @@ body {
     border-radius: 15px;
     padding: 10px;
     background-color: blue;
+    width: 20%;
 }
 
 .new-deal-button {
     border-radius: 15px;
     padding: 10px;
     background-color: white;
+    width: 20%;
 }
 
 .hit-button {
     background-color: red;
     border-radius: 15px;
     padding: 10px;
+    width: 20%;
 }
 
-.player-cards {
-    padding-bottom: 30px;
+.dealer-cards-p, .player-cards-p {
+    font-family: 'Courgette', cursive;
+    font-family: 'Edu TAS Beginner', cursive;
+    color: white;
+    font-size: 25px;;
 }
 
-#original-deck-container {
-
+.player-score, .dealer-score {
+    font-family: 'Courgette', cursive;
+    font-family: 'Edu TAS Beginner', cursive;
+    color: white;
+    font-size: 35px;
 }

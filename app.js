@@ -2,8 +2,6 @@
 let dealerHand = []
 let playerHand = []
 
-
-
 // Buttons
 const hitButtonEl = document.querySelector('.hit-button')
 const standButtonEl = document.querySelector('.stand-button')
@@ -11,7 +9,7 @@ const newDealButton = document.querySelector('.new-deal-button')
 console.log("New Deal Button:", newDealButton)
 console.log("Hit Button", hitButtonEl)
 console.log("Stand Button:", standButtonEl)
-//
+// grabbing the span to display hand total
 const playerScore = document.querySelector('.player-score')
 const dealerScore = document.querySelector('.dealer-score')
 // event listeners for buttons
@@ -20,6 +18,8 @@ standButtonEl.addEventListener('click', standBtn)
 newDealButton.addEventListener('click', newDealBtn)
 //
 
+
+// functions 
 init()
 
 function init() {
@@ -29,8 +29,7 @@ function init() {
 
 
 
-function gameOver() {
-}
+
 
 function updateScore() {
     if(player === wins){
@@ -94,7 +93,7 @@ function renderDealerHand() {
   renderDeckInContainer(dealerHand, dealersContainer)
   return dealerHand
 }
-const currentDealerHand = renderDealerHand()
+let currentDealerHand = renderDealerHand()
 
 function renderPlayerHand() {
     playerHand.push(dealCard(), dealCard())
@@ -102,7 +101,7 @@ function renderPlayerHand() {
     return playerHand
 }
 
-const currentPlayerHand = renderPlayerHand()
+let currentPlayerHand = renderPlayerHand()
 
 
 function renderDeckInContainer(deck, container) {
@@ -129,14 +128,15 @@ function playerHandTotal() {
 
 console.log(playerHandTotal())
 
+// hit button function 
 function hitBtn(event) {
     console.log(event.target.innerText)
     if (playerHandTotal() < 21) {
-        const thirdCard = dealCard()
-        playerHand.push(thirdCard)
+        const playerThirdCard = dealCard()
+        playerHand.push(playerThirdCard)
         renderDeckInContainer(playerHand, playersContainer)
         playerHandScore = playerHandTotal()
-        playerHandScore += parseInt(thirdCard.value)
+        playerHandScore += parseInt(playerThirdCard.value)
         playerScore.textContent = `Score: ${playerHandScore}`
         return playerHandScore
     }else {
@@ -152,7 +152,7 @@ function standBtn(event) {
 }
 
 
-
+let dealerHandScore = 0
 function dealerHandTotal() {
     let dealerHandTotal = currentDealerHand[0].value + currentDealerHand[1].value
     dealerScore.textContent = `Score: ${dealerHandTotal}`
@@ -160,7 +160,7 @@ function dealerHandTotal() {
 }
 
 function dealerHit() {
-    
+
 }
 
 function compareHands() {
@@ -183,12 +183,19 @@ function compareHands() {
     }
 }
 
-function newDealBtn(event) {
-    console.log(event.target.innerText)
-    renderPlayerHand()
-    renderDealerHand()
+function gameOver() {
+    compareHands()
 }
 
-console.log(compareHands())
+function newDealBtn(event) {
+    console.log(event.target.innerText)
+    dealerHand = []
+    playerHand = []
+    currentPlayerHand = renderPlayerHand()
+    currentDealerHand = renderDealerHand()
+    playerHandTotal()
+    dealerHandTotal()
+}
+// console.log(gameOver())
 console.log(dealerHandTotal())
 
