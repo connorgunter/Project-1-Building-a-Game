@@ -53,3 +53,10 @@ body {
     color: white;
     font-size: 35px;
 }
+
+.game-result {
+    font-family: 'Courgette', cursive;
+    font-family: 'Edu TAS Beginner', cursive;
+    color: red;
+    font-size: 35px;
+}
