@@ -1,8 +1,8 @@
 // Variable declaration
 let dealerHand = []
 let playerHand = []
-let playerScore = 0;
-let dealerScore = 0;
+
+
 
 // Buttons
 const hitButtonEl = document.querySelector('.hit-button')
@@ -12,6 +12,8 @@ console.log("New Deal Button:", newDealButton)
 console.log("Hit Button", hitButtonEl)
 console.log("Stand Button:", standButtonEl)
 //
+const playerScore = document.querySelector('.player-score')
+const dealerScore = document.querySelector('.dealer-score')
 // event listeners for buttons
 hitButtonEl.addEventListener('click', hitBtn)
 standButtonEl.addEventListener('click', standBtn)
@@ -25,9 +27,7 @@ function init() {
 }
 
 
-function newDealBtn(event) {
-    console.log(event.target.innerText)
-}
+
 
 function gameOver() {
 }
@@ -116,11 +116,14 @@ function renderDeckInContainer(deck, container) {
   // const cardsHtml = deck.reduce(function(html, card) {
   //   return html + `<div class="card ${card.face}"></div>`;
   // }, '');
+
+
   container.innerHTML = cardsHtml;
 }
 let playerHandScore = 0
 function playerHandTotal() {
     playerHandScore = currentPlayerHand[0].value + currentPlayerHand[1].value
+    playerScore.textContent = `Score: ${playerHandScore}`
     return playerHandScore
 }
 
@@ -134,7 +137,7 @@ function hitBtn(event) {
         renderDeckInContainer(playerHand, playersContainer)
         playerHandScore = playerHandTotal()
         playerHandScore += parseInt(thirdCard.value)
-        console.log(playerHandScore)
+        playerScore.textContent = `Score: ${playerHandScore}`
         return playerHandScore
     }else {
         console.log("Blackjack!!!")
@@ -152,7 +155,12 @@ function standBtn(event) {
 
 function dealerHandTotal() {
     let dealerHandTotal = currentDealerHand[0].value + currentDealerHand[1].value
+    dealerScore.textContent = `Score: ${dealerHandTotal}`
     return dealerHandTotal
+}
+
+function dealerHit() {
+    
 }
 
 function compareHands() {
@@ -174,6 +182,13 @@ function compareHands() {
         return
     }
 }
+
+function newDealBtn(event) {
+    console.log(event.target.innerText)
+    renderPlayerHand()
+    renderDealerHand()
+}
+
 console.log(compareHands())
 console.log(dealerHandTotal())
 
