@@ -32,7 +32,7 @@ function init() {
 //     }
 // }
 
-
+                            // DEAL CARDS FUNCTIONS //
 /*----- constants -----*/
 // source for deck / shuffled deck
 // https://generalassembly.instructure.com/courses/161/pages/video-resource-css-card-library?module_item_id=2837
@@ -77,24 +77,23 @@ function getNewShuffledDeck() {
 }
 // deal 2 new cards for dealer and player and render on screen //
 function dealCard() { // deals first 2 cards for player and dealer
-    const dealCard = getNewShuffledDeck().pop()
-    return dealCard;
+    const dealCard = getNewShuffledDeck().pop() // grab the first card from the array of shuffled cards and pop it into the dealCard array
+    return dealCard; // return the dealt card into the dealCard() function
  }
 function renderDealerHand() {
-  // Create a copy of the originalDeck (leave originalDeck untouched!)
-  dealerHand.push(dealCard(),dealCard())
-  renderDeckInContainer(dealerHand, dealersContainer)
-  return dealerHand
+  dealerHand.push(dealCard(),dealCard()) // push 2 cards from the shuffled deck into the dealers hand
+  renderDeckInContainer(dealerHand, dealersContainer) // render the cards inside the dealers hand
+  return dealerHand // return the rendered starting 2 cards into the function
 }
-let currentDealerHand = renderDealerHand()
+let currentDealerHand = renderDealerHand() // setting the  current dealer hand equal to the value of the function renderDealerHand()
 
 function renderPlayerHand() {
-    playerHand.push(dealCard(), dealCard())
-    renderDeckInContainer(playerHand, playersContainer)
-    return playerHand
+    playerHand.push(dealCard(), dealCard()) // push 2 cards from the shuffled deck into the players hand
+    renderDeckInContainer(playerHand, playersContainer) // render the cards inside the players hand
+    return playerHand // return the rendered starting 2 cards into the function
 }
 
-let currentPlayerHand = renderPlayerHand()
+let currentPlayerHand = renderPlayerHand() // // setting the current player hand equal to the value of the function renderPlayerHand()
 
 
 function renderDeckInContainer(deck, container) {
@@ -112,31 +111,31 @@ function renderDeckInContainer(deck, container) {
 
   container.innerHTML = cardsHtml;
 }
-// update Players current hand score 
+
+                                // DEAL CARDS FUNCTIONS END //
+
+
 let playerHandScore = 0
-function playerHandTotal() {
-    playerHandScore = 0
-    for(const card of currentPlayerHand) {
-        playerHandScore += parseInt(card.value)
+function playerHandTotal() { // math for adding values of the cards
+    playerHandScore = 0 // sets the initial value of the playerHandScore to 0
+    for(const card of currentPlayerHand) { // goes through each card in the currentPlayerHand which is an array
+        playerHandScore += parseInt(card.value) // adds the value of each card to the playerHandScore
     }
-    playerScoreText.textContent = `Score: ${playerHandScore}`
-    return playerHandScore
+    playerScoreText.textContent = `Score: ${playerHandScore}` // displays current score for the current hand on the screen
+    return playerHandScore // returns the final value of playerHandScore
 }
 
 console.log(playerHandTotal())
 
 // hit button function 
-function hitBtn(event) {
-    console.log(event.target.innerText)
+function hitBtn() {
     if (playerHandTotal() < 21) { //if playerHandTotal < 21
         const playerNewCard = dealCard() // create a new card to draw from shuffled deck
         playerHand.push(playerNewCard) // push the new card onto the playerHand
         renderDeckInContainer(playerHand, playersContainer) // render the new card on the screen
-        // playerHandScore = playerHandTotal() // grab the playerhandtotal and set it equal to the variable playerhandscore
-        console.log(playerHandScore)
         playerHandScore += parseInt(playerNewCard.value) // add the value of the new card to the playerhandscore
         playerScoreText.textContent = `Score: ${playerHandScore}` // display the new score
-        if (playerHandTotal() > 21) {
+        if (playerHandTotal() > 21) { // if the player goes over 21, display on screen the player has busted
             gameResult.textContent = "Busted! Dealer Wins!"
         }
     }else{
@@ -160,16 +159,16 @@ console.log(dealerHandTotal())
 function standBtn(event) { // stand button when pressed
     console.log(event.target.innerText) // log it is detecting click
     function dealerTurn() { // this function is for when the stand button is pressed, initiate dealers turn
-        if (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
+        while (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
             dealerHit() // dealer will now hit, grabbing a new card from the deck
-        } else { // if the dealer has 17 or more, compare hands and update the score because the dealer has chose to stand
+        } // if the dealer has 17 or more, compare hands and update the score because the dealer has chose to stand
             compareHands()
             updateScore()
         }
-
+        dealerTurn()
     }
-dealerTurn() // call the dealer turn function, will invoke when stand is clicked
-}
+ // call the dealer turn function, will invoke when stand is clicked
+
 
 function dealerHit() { // dealer hit function
         const dealerNewCard = dealCard() // create a new variable for the next card
@@ -225,5 +224,3 @@ function newDealBtn(event) { // New Deal Button
     dealerHandTotal()
     gameResult.textContent = ""
 }
-
-
