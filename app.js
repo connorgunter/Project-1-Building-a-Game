@@ -3,15 +3,12 @@ let dealerHand = []
 let playerHand = []
 
 // Buttons
-const hitButtonEl = document.querySelector('.hit-button')
+const hitButtonEl = document.querySelector('.hit-button') 
 const standButtonEl = document.querySelector('.stand-button')
 const newDealButton = document.querySelector('.new-deal-button')
-console.log("New Deal Button:", newDealButton)
-console.log("Hit Button", hitButtonEl)
-console.log("Stand Button:", standButtonEl)
 // grabbing the span to display hand total
-const playerScore = document.querySelector('.player-score')
-const dealerScore = document.querySelector('.dealer-score')
+const playerScoreText = document.querySelector('.player-score')
+const dealerScoreText = document.querySelector('.dealer-score')
 const gameResult = document.querySelector('.game-result')
 // event listeners for buttons
 hitButtonEl.addEventListener('click', hitBtn)
@@ -27,18 +24,13 @@ function init() {
     console.log("game is running")
 }
 
-
-
-
-
-
-function updateScore() {
-    if(player === wins){
-        playerScore++;
-    } else {
-        dealerScore++
-    }
-}
+// function updateScore() {
+//     if(player === wins){
+//         playerScoreText++;
+//     } else {
+//         dealerScoreText++
+//     }
+// }
 
 
 /*----- constants -----*/
@@ -84,7 +76,7 @@ function getNewShuffledDeck() {
   return newShuffledDeck;
 }
 // deal 2 new cards for dealer and player and render on screen //
-function dealCard() {
+function dealCard() { // deals first 2 cards for player and dealer
     const dealCard = getNewShuffledDeck().pop()
     return dealCard;
  }
@@ -123,8 +115,11 @@ function renderDeckInContainer(deck, container) {
 // update Players current hand score 
 let playerHandScore = 0
 function playerHandTotal() {
-    playerHandScore = currentPlayerHand[0].value + currentPlayerHand[1].value
-    playerScore.textContent = `Score: ${playerHandScore}`
+    playerHandScore = 0
+    for(const card of currentPlayerHand) {
+        playerHandScore += parseInt(card.value)
+    }
+    playerScoreText.textContent = `Score: ${playerHandScore}`
     return playerHandScore
 }
 
@@ -134,81 +129,101 @@ console.log(playerHandTotal())
 function hitBtn(event) {
     console.log(event.target.innerText)
     if (playerHandTotal() < 21) { //if playerHandTotal < 21
-        const playerThirdCard = dealCard() // create a new card to draw from shuffled deck
-        playerHand.push(playerThirdCard) // push the new card onto the playerHand
+        const playerNewCard = dealCard() // create a new card to draw from shuffled deck
+        playerHand.push(playerNewCard) // push the new card onto the playerHand
         renderDeckInContainer(playerHand, playersContainer) // render the new card on the screen
-        playerHandScore = playerHandTotal() // grab the playerhandtotal and set it equal to the variable playerhandscore
-        playerHandScore += parseInt(playerThirdCard.value) // add the value of the new card to the playerhandscore
-        playerScore.textContent = `Score: ${playerHandScore}` // display the new score
-        return playerHandScore // return the new score
+        // playerHandScore = playerHandTotal() // grab the playerhandtotal and set it equal to the variable playerhandscore
+        console.log(playerHandScore)
+        playerHandScore += parseInt(playerNewCard.value) // add the value of the new card to the playerhandscore
+        playerScoreText.textContent = `Score: ${playerHandScore}` // display the new score
+        if (playerHandTotal() > 21) {
+            gameResult.textContent = "Busted! Dealer Wins!"
+        }
     }else{
         console.log("Blackjack!!!")
     }
 }
 
-function standBtn(event) {
-    console.log(event.target.innerText)
-    while (dealerHandTotal < 17) {
 
-    }
-}
-
+                        // DEALER SCORE AND HIT FUNCTIONS //
 let dealerHandScore = 0
-function dealerHandTotal() {
-    let dealerHandTotal = currentDealerHand[0].value + currentDealerHand[1].value
-    dealerScore.textContent = `Score: ${dealerHandTotal}`
-    return dealerHandTotal
+function dealerHandTotal() { // this function will do the math of the dealersHandTotal for the first 2 cards
+    let dealerHandScore = 0
+    for(const card of currentDealerHand) {
+        dealerHandScore += parseInt(card.value)
+    }
+    dealerScoreText.textContent = `Score: ${dealerHandScore}` // displays the current dealerHandTotal
+    return dealerHandScore // returns the value to the function
 }
 console.log(dealerHandTotal())
 
-function dealerHit() {
-    if (dealerHandTotal() < 17) {
-        console.log("THIS IS WORKING")
-        const dealerThirdCard = dealCard()
-        dealerHand.push(dealerThirdCard)
-        console.log(dealerHand)
-        renderDeckInContainer(dealerHand, dealersContainer)
-        dealerHandScore = dealerHandTotal()
-        dealerHandScore += parseInt(dealerThirdCard.value)
-        dealerScore.textContent = `Score: ${dealerHandScore}`
-        return dealerHandScore
+function standBtn(event) { // stand button when pressed
+    console.log(event.target.innerText) // log it is detecting click
+    function dealerTurn() { // this function is for when the stand button is pressed, initiate dealers turn
+        if (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
+            dealerHit() // dealer will now hit, grabbing a new card from the deck
+        } else { // if the dealer has 17 or more, compare hands and update the score because the dealer has chose to stand
+            compareHands()
+            updateScore()
+        }
+
     }
+dealerTurn() // call the dealer turn function, will invoke when stand is clicked
 }
 
-function compareHands() {
-    if(dealerHandTotal() <= 21 && dealerHandTotal() > playerHandTotal()){
-        gameResult.textContent = "Dealer Wins!"
-    } else if (dealerHandTotal() > 21) {
-        gameResult.textContent = "Dealer Busted! Player Wins!"
-    }else if (playerHandTotal() > 21) {
-        gameResult.textContent = "Player busted! Dealer Wins!"
-    } else if (playerHandTotal() <= 21 && dealerHandTotal() < playerHandTotal()){
-        gameResult.textContent = "Player Wins!"
-    } else if (playerHandTotal() === dealerHandTotal()){
-        gameResult.textContent ="Push! (Tie!)"
-    } else if (playerHandTotal() === 21 && dealerHandTotal() < 21) {
-        gameResult.textContent = "You got BlackJack! Player Wins!"
-    } else if (dealerHandTotal() === 21 && playerHandTotal() < 21) {
-        gameResult.textContent = "Dealer got BlackJack! Player Loses!"
-    } else {
-        return
-    }
+function dealerHit() { // dealer hit function
+        const dealerNewCard = dealCard() // create a new variable for the next card
+        dealerHand.push(dealerNewCard) // push the new card onto the dealers hand
+        renderDeckInContainer(dealerHand, dealersContainer) // render the new card on the screen
+        dealerHandScore += parseInt(dealerNewCard.value) // adds the new cards value to the current dealerHandScore value
+        dealerScoreText.textContent = `Score: ${dealerHandScore}` // displays dealerScoreText on the screen
+ 
+        if (dealerHandTotal() > 21){
+            gameResult.textContent = "Dealer Busted! Player Wins!"
+        }
 }
+                        // DEALER HIT AND SCORE FUNCTIONS END //
+
+
+
+// function compareHands() {
+//     if(dealerHandTotal() <= 21 && dealerHandTotal() > playerHandTotal()){
+//         gameResult.textContent = "Dealer Wins!"
+//     } else if (dealerHandTotal() > 21) {
+//         gameResult.textContent = "Dealer Busted! Player Wins!"
+//     }else if (playerHandTotal() > 21) {
+//         gameResult.textContent = "Player busted! Dealer Wins!"
+//     } else if (playerHandTotal() <= 21 && dealerHandTotal() < playerHandTotal()){
+//         gameResult.textContent = "Player Wins!"
+//     } else if (playerHandTotal() === dealerHandTotal()){
+//         gameResult.textContent ="Push! (Tie!)"
+//     } else if (playerHandTotal() === 21 && dealerHandTotal() < 21) {
+//         gameResult.textContent = "You got BlackJack! Player Wins!"
+//     } else if (dealerHandTotal() === 21 && playerHandTotal() < 21) {
+//         gameResult.textContent = "Dealer got BlackJack! Player Loses!"
+//     } else {
+//         return
+//     }
+// }
 
 function gameOver() {
     compareHands()
+    updateScore()
+    
 }
+
 // deals new cards 
-function newDealBtn(event) {
-    console.log(event.target.innerText)
-    dealerHand = []
-    playerHand = []
-    currentPlayerHand = renderPlayerHand()
-    currentDealerHand = renderDealerHand()
-    playerHandTotal()
+function newDealBtn(event) { // New Deal Button
+    console.log(event.target.innerText) // checking if the button works
+    dealerHand = [] // setting dealer hand to empty
+    playerHand = [] // setting the player hand to empty
+    currentPlayerHand = renderPlayerHand() // rendering starting 2 cards to currentPlayerHand
+    currentDealerHand = renderDealerHand() // rendering starting 2 cards to currentPlayerHand
+    playerHandScore = 0
+    dealerHandScore = 0
+    playerHandTotal() 
     dealerHandTotal()
-    gameOver()
+    gameResult.textContent = ""
 }
-dealerHit()
 
 
