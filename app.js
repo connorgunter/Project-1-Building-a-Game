@@ -2,6 +2,7 @@
 let dealerHand = []
 let playerHand = []
 
+
 // Buttons
 const hitButtonEl = document.querySelector('.hit-button') 
 const standButtonEl = document.querySelector('.stand-button')
@@ -40,8 +41,8 @@ const originalDeck = buildOriginalDeck();
 
 let shuffledDeck;
 
-const playersContainer = document.getElementById('players-container');
-const dealersContainer = document.getElementById('dealers-container');
+const playersContainer = document.getElementById('players-container'); // caching players container
+const dealersContainer = document.getElementById('dealers-container'); // caching dealers container
 
 function buildOriginalDeck() {
   const deck = [];
@@ -80,7 +81,7 @@ function dealCard() { // deals first 2 cards for player and dealer
 
 function renderDealerHand() {
     dealerHand.push(dealCard(),dealCard())
-    console.log(dealerHand[0])
+    
     // const firstCard = document.querySelector('#dealers-container')
     // console.log(firstCard[0])
     renderDeckInContainer(dealerHand, dealersContainer) // render the cards inside the dealers hand
@@ -158,7 +159,7 @@ function hitBtn() {
         console.log("Blackjack!!!")
     }
 }
-                        //PLAYER SCORE AND HIT FUNCTION END //
+                                //PLAYER SCORE AND HIT FUNCTION END //
 
                         // DEALER SCORE AND HIT FUNCTIONS //
 let dealerHandScore = 0
@@ -185,6 +186,7 @@ function standBtn(event) { // stand button when pressed
     function dealerTurn() { // this function is for when the stand button is pressed, initiate dealers turn
         while (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
             dealerHit() // dealer will now hit, grabbing a new card from the deck
+            firstCard.classList.remove('card', 'back')  
         } // if the dealer has 17 or more, compare hands and update the score because the dealer has chose to stand
             compareHands()
             updateScore()
@@ -194,7 +196,7 @@ function standBtn(event) { // stand button when pressed
             standButtonEl.removeEventListener('click', standBtn)
         }
     }
- // call the dealer turn function, will invoke when stand is clicked
+
 
 
 function dealerHit() { // dealer hit function
@@ -211,7 +213,7 @@ function dealerHit() { // dealer hit function
                         // DEALER HIT AND SCORE FUNCTIONS END //
 
 
-
+                // COMPARE HANDS, GAME OVER, AND NEW DEAL FUNCTIONS //
 function compareHands() {
     if(dealerHandTotal() <= 21 && dealerHandTotal() > playerHandTotal()){
         gameResult.textContent = "Dealer Wins!"
