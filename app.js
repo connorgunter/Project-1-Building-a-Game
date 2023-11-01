@@ -22,15 +22,12 @@ init()
 
 function init() {
     console.log("game is running")
+    
 }
 
-// function updateScore() {
-//     if(player === wins){
-//         playerScoreText++;
-//     } else {
-//         dealerScoreText++
-//     }
-// }
+function updateWinStreak() {
+   
+}
 
                             // DEAL CARDS FUNCTIONS //
 /*----- constants -----*/
@@ -80,12 +77,21 @@ function dealCard() { // deals first 2 cards for player and dealer
     const dealCard = getNewShuffledDeck().pop() // grab the first card from the array of shuffled cards and pop it into the dealCard array
     return dealCard; // return the dealt card into the dealCard() function
  }
+
 function renderDealerHand() {
-  dealerHand.push(dealCard(),dealCard()) // push 2 cards from the shuffled deck into the dealers hand
-  renderDeckInContainer(dealerHand, dealersContainer) // render the cards inside the dealers hand
-  return dealerHand // return the rendered starting 2 cards into the function
+    dealerHand.push(dealCard(),dealCard())
+    console.log(dealerHand[0])
+    // const firstCard = document.querySelector('#dealers-container')
+    // console.log(firstCard[0])
+    renderDeckInContainer(dealerHand, dealersContainer) // render the cards inside the dealers hand
+    return dealerHand // return the rendered starting 2 cards into the function
 }
 let currentDealerHand = renderDealerHand() // setting the  current dealer hand equal to the value of the function renderDealerHand()
+
+const firstCard = document.querySelector('#dealers-container').childNodes[0] // grabbing the first card from the dealer hand
+firstCard.classList.add('card', 'back') //
+console.log(firstCard)
+
 
 function renderPlayerHand() {
     playerHand.push(dealCard(), dealCard()) // push 2 cards from the shuffled deck into the players hand
@@ -113,13 +119,22 @@ function renderDeckInContainer(deck, container) {
 }
 
                                 // DEAL CARDS FUNCTIONS END //
-
+                            
+                                // PLAYER SCORE AND HIT FUNCTION //
 
 let playerHandScore = 0
 function playerHandTotal() { // math for adding values of the cards
     playerHandScore = 0 // sets the initial value of the playerHandScore to 0
+    let numAces = 0
     for(const card of currentPlayerHand) { // goes through each card in the currentPlayerHand which is an array
         playerHandScore += parseInt(card.value) // adds the value of each card to the playerHandScore
+    if (card.value === 11){
+        numAces++ // counts number of aces in hand
+        }
+    }
+    while (playerHandScore > 21 && numAces > 0) { // this will change the value of aces to 1 when the total hand exceeds 21 and there is a ace in the hand
+        playerHandScore -= 10 // subracts 10 for each ace, which will change the value from 11 to 1
+        numAces--
     }
     playerScoreText.textContent = `Score: ${playerHandScore}` // displays current score for the current hand on the screen
     return playerHandScore // returns the final value of playerHandScore
@@ -137,19 +152,32 @@ function hitBtn() {
         playerScoreText.textContent = `Score: ${playerHandScore}` // display the new score
         if (playerHandTotal() > 21) { // if the player goes over 21, display on screen the player has busted
             gameResult.textContent = "Busted! Dealer Wins!"
+            if(playerHandScore > 21){
+                standButtonEl.removeEventListener('click', standBtn)
+                hitButtonEl.removeEventListener('click', hitBtn)
+            }
+            //
         }
     }else{
         console.log("Blackjack!!!")
     }
 }
-
+                        //PLAYER SCORE AND HIT FUNCTION END //
 
                         // DEALER SCORE AND HIT FUNCTIONS //
 let dealerHandScore = 0
 function dealerHandTotal() { // this function will do the math of the dealersHandTotal for the first 2 cards
-    let dealerHandScore = 0
+    dealerHandScore = 0
+    let numAces = 0
     for(const card of currentDealerHand) {
         dealerHandScore += parseInt(card.value)
+    if (card.value === 11){
+        numAces++ // counts number of aces in hand
+        }
+    }
+    while (dealerHandScore > 21 && numAces > 0) { // this will change the value of aces to 1 when the total hand exceeds 21 and there is a ace in the hand
+        dealerHandScore -= 10 // subracts 10 for each ace, which will change the value from 11 to 1
+        numAces--
     }
     dealerScoreText.textContent = `Score: ${dealerHandScore}` // displays the current dealerHandTotal
     return dealerHandScore // returns the value to the function
@@ -166,6 +194,9 @@ function standBtn(event) { // stand button when pressed
             updateScore()
         }
         dealerTurn()
+        if(dealerHandScore > 21){
+            standButtonEl.removeEventListener('click', standBtn)
+        }
     }
  // call the dealer turn function, will invoke when stand is clicked
 
@@ -185,25 +216,25 @@ function dealerHit() { // dealer hit function
 
 
 
-// function compareHands() {
-//     if(dealerHandTotal() <= 21 && dealerHandTotal() > playerHandTotal()){
-//         gameResult.textContent = "Dealer Wins!"
-//     } else if (dealerHandTotal() > 21) {
-//         gameResult.textContent = "Dealer Busted! Player Wins!"
-//     }else if (playerHandTotal() > 21) {
-//         gameResult.textContent = "Player busted! Dealer Wins!"
-//     } else if (playerHandTotal() <= 21 && dealerHandTotal() < playerHandTotal()){
-//         gameResult.textContent = "Player Wins!"
-//     } else if (playerHandTotal() === dealerHandTotal()){
-//         gameResult.textContent ="Push! (Tie!)"
-//     } else if (playerHandTotal() === 21 && dealerHandTotal() < 21) {
-//         gameResult.textContent = "You got BlackJack! Player Wins!"
-//     } else if (dealerHandTotal() === 21 && playerHandTotal() < 21) {
-//         gameResult.textContent = "Dealer got BlackJack! Player Loses!"
-//     } else {
-//         return
-//     }
-// }
+function compareHands() {
+    if(dealerHandTotal() <= 21 && dealerHandTotal() > playerHandTotal()){
+        gameResult.textContent = "Dealer Wins!"
+    } else if (dealerHandTotal() > 21) {
+        gameResult.textContent = "Dealer Busted! Player Wins!"
+    }else if (playerHandTotal() > 21) {
+        gameResult.textContent = "Player busted! Dealer Wins!"
+    } else if (playerHandTotal() <= 21 && dealerHandTotal() < playerHandTotal()){
+        gameResult.textContent = "Player Wins!"
+    } else if (playerHandTotal() === dealerHandTotal()){
+        gameResult.textContent ="Push! (Tie!)"
+    } else if (playerHandTotal() === 21 && dealerHandTotal() < 21) {
+        gameResult.textContent = "You got BlackJack! Player Wins!"
+    } else if (dealerHandTotal() === 21 && playerHandTotal() < 21) {
+        gameResult.textContent = "Dealer got BlackJack! Player Loses!"
+    } else {
+        return
+    }
+}
 
 function gameOver() {
     compareHands()
@@ -218,6 +249,8 @@ function newDealBtn(event) { // New Deal Button
     playerHand = [] // setting the player hand to empty
     currentPlayerHand = renderPlayerHand() // rendering starting 2 cards to currentPlayerHand
     currentDealerHand = renderDealerHand() // rendering starting 2 cards to currentPlayerHand
+    const firstCard = document.querySelector('#dealers-container').childNodes[0]
+    firstCard.classList.add('card', 'back')   
     playerHandScore = 0
     dealerHandScore = 0
     playerHandTotal() 
