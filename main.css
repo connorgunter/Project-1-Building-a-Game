@@ -9,9 +9,13 @@ body {
     text-align: center;
 }
 
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 58px;
+}
+
 .container {
     display: grid;
-    
 }
 
 .button-wrapper {
@@ -41,22 +45,26 @@ body {
 }
 
 .dealer-cards-p, .player-cards-p {
-    font-family: 'Courgette', cursive;
     font-family: 'Edu TAS Beginner', cursive;
     color: white;
     font-size: 25px;;
 }
 
-.player-score, .dealer-score {
+.player-score {
     font-family: 'Courgette', cursive;
-    font-family: 'Edu TAS Beginner', cursive;
     color: white;
     font-size: 35px;
 }
 
+.dealer-score {
+    font-family: 'Courgette', cursive;
+    color: white;
+    font-size: 35px;
+
+}
+
 .game-result {
     font-family: 'Courgette', cursive;
-    font-family: 'Edu TAS Beginner', cursive;
     color: red;
     font-size: 35px;
 }

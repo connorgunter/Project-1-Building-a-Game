@@ -23,7 +23,7 @@ init()
 
 function init() {
     console.log("game is running")
-    
+    dealerScoreText.style.visibility = 'hidden'
 }
 
 function updateWinStreak() {
@@ -166,8 +166,10 @@ let dealerHandScore = 0
 function dealerHandTotal() { // this function will do the math of the dealersHandTotal for the first 2 cards
     dealerHandScore = 0
     let numAces = 0
+    
     for(const card of currentDealerHand) {
         dealerHandScore += parseInt(card.value)
+
     if (card.value === 11){
         numAces++ // counts number of aces in hand
         }
@@ -183,18 +185,18 @@ console.log(dealerHandTotal())
 
 function standBtn(event) { // stand button when pressed
     console.log(event.target.innerText) // log it is detecting click
+    firstCard.classList.remove('back')
     function dealerTurn() { // this function is for when the stand button is pressed, initiate dealers turn
+        dealerScoreText.style.visibility = 'visible'  
         while (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
             dealerHit() // dealer will now hit, grabbing a new card from the deck
-            firstCard.classList.remove('card', 'back')  
+            
+            
         } // if the dealer has 17 or more, compare hands and update the score because the dealer has chose to stand
             compareHands()
-            updateScore()
+            // updateScore()
         }
         dealerTurn()
-        if(dealerHandScore > 21){
-            standButtonEl.removeEventListener('click', standBtn)
-        }
     }
 
 
@@ -242,14 +244,15 @@ function gameOver() {
 
 // deals new cards 
 function newDealBtn(event) { // New Deal Button
+    dealerScoreText.style.visibility = 'hidden'
     console.log(event.target.innerText) // checking if the button works
     dealerHand = [] // setting dealer hand to empty
     playerHand = [] // setting the player hand to empty
     currentPlayerHand = renderPlayerHand() // rendering starting 2 cards to currentPlayerHand
     currentDealerHand = renderDealerHand() // rendering starting 2 cards to currentPlayerHand
     const firstCard = document.querySelector('#dealers-container').childNodes[0]
-    firstCard.classList.add('card', 'back')   
-    playerHandScore = 0
+    firstCard.classList.add('back') // flip dealers hidden card over so player can see it  
+    playerHandScore = 0 // 
     dealerHandScore = 0
     playerHandTotal() 
     dealerHandTotal()
