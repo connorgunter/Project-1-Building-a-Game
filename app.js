@@ -152,10 +152,6 @@ function hitBtn() {
         playerScoreText.textContent = `Score: ${playerHandScore}` // display the new score
         if (playerHandTotal() > 21) { // if the player goes over 21, display on screen the player has busted
             gameResult.textContent = "Busted! Dealer Wins!"
-            if(playerHandScore > 21){
-                standButtonEl.removeEventListener('click', standBtn)
-                hitButtonEl.removeEventListener('click', hitBtn)
-            }
             //
         }
     }else{
