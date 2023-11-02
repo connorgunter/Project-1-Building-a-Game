@@ -40,7 +40,6 @@ function startGame() {
 init()
 
 function init() {
-    console.log("game is running")
     dealerScoreText.style.visibility = 'hidden'
     dealerWinCount = 0
     playerWinCount = 0
@@ -49,13 +48,11 @@ function init() {
 function playerWins() {
     playerWinCount++
     winBoxPlayer.textContent = `Player Wins: ${playerWinCount}`
-    console.log(playerWinCount)
 }
 
 function dealerWins() {
     dealerWinCount++
     winBoxDealer.textContent = `Dealer Wins: ${dealerWinCount}`
-    console.log(dealerWinCount)
 }
  
                             // DEAL CARDS FUNCTIONS //
@@ -108,18 +105,16 @@ function dealCard() { // deals first 2 cards for player and dealer
  }
 
 function renderDealerHand() {
-    dealerHand.push(dealCard(),dealCard())
+    dealerHand.push(dealCard(),dealCard()) // deals 2 cards to dealer
     
     // const firstCard = document.querySelector('#dealers-container')
-    // console.log(firstCard[0])
     renderDeckInContainer(dealerHand, dealersContainer) // render the cards inside the dealers hand
     return dealerHand // return the rendered starting 2 cards into the function
 }
 let currentDealerHand = renderDealerHand() // setting the  current dealer hand equal to the value of the function renderDealerHand()
 
 const firstCard = document.querySelector('#dealers-container').childNodes[0] // grabbing the first card from the dealer hand
-firstCard.classList.add('card', 'back') //
-console.log(firstCard)
+firstCard.classList.add('card', 'back') // hides first dealer card
 
 
 function renderPlayerHand() {
@@ -169,7 +164,7 @@ function playerHandTotal() { // math for adding values of the cards
     return playerHandScore // returns the final value of playerHandScore
 }
 
-console.log(playerHandTotal())
+playerHandTotal()
 
 // hit button function 
 function hitBtn() {
@@ -180,6 +175,7 @@ function hitBtn() {
         playerHandScore += parseInt(playerNewCard.value) // add the value of the new card to the playerhandscore
         playerScoreText.textContent = `Score: ${playerHandScore}` // display the new score
         if (playerHandTotal() > 21) { // if the player goes over 21
+            dealerWins()
             gameResult.textContent = "Busted! Dealer Wins!" // display on screen the player has busted
             firstCard.classList.remove('back') // show the dealer flipped card
         }
@@ -207,11 +203,12 @@ function dealerHandTotal() { // this function will do the math of the dealersHan
     dealerScoreText.textContent = `Score: ${dealerHandScore}` // displays the current dealerHandTotal
     return dealerHandScore // returns the value to the function
 }
-console.log(dealerHandTotal())
+dealerHandTotal()
 
-function standBtn(event) { // stand button when pressed
-    console.log(event.target.innerText) // log it is detecting click
+function standBtn() { // stand button when pressed
+    firstCard.classList.remove('back') // flip dealers hidden card over
     function dealerTurn() { // this function is for when the stand button is pressed, initiate dealers turn
+        firstCard.classList.remove('back') 
         dealerScoreText.style.visibility = 'visible'  
         while (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
             dealerHit() // dealer will now hit, grabbing a new card from the deck
@@ -275,9 +272,8 @@ function gameOver() {
 }
 
 // deals new cards 
-function newDealBtn(event) { // New Deal Button
+function newDealBtn() { // New Deal Button
     dealerScoreText.style.visibility = 'hidden'
-    console.log(event.target.innerText) // checking if the button works
     dealerHand = [] // setting dealer hand to empty
     playerHand = [] // setting the player hand to empty
     currentPlayerHand = renderPlayerHand() // rendering starting 2 cards to currentPlayerHand
