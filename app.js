@@ -234,7 +234,7 @@ function dealerHit() { // dealer hit function
         renderDeckInContainer(dealerHand, dealersContainer) // render the new card on the screen
         dealerHandScore += parseInt(dealerNewCard.value) // adds the new cards value to the current dealerHandScore value
         dealerScoreText.textContent = `Score: ${dealerHandScore}` // displays dealerScoreText on the screen
- 
+        firstCard.classList.remove('back') 
         if (dealerHandTotal() > 21){
             gameResult.textContent = "Dealer Busted! Player Wins!"
         }
