@@ -10,6 +10,8 @@ const standButtonEl = document.querySelector('.stand-button') // caching stand b
 const newDealButton = document.querySelector('.new-deal-button') // caching new deal button
 const startGameButtonEl = document.querySelector('.start-game-button')
 
+const winBoxPlayer = document.querySelector('.win-box-player')
+const winBoxDealer = document.querySelector('.win-box-dealer')
 const playerScoreText = document.querySelector('.player-score') // caching player score div
 const dealerScoreText = document.querySelector('.dealer-score') // caching dealer score div
 const gameResult = document.querySelector('.game-result') // caching game result div
@@ -46,11 +48,13 @@ function init() {
 
 function playerWins() {
     playerWinCount++
+    winBoxPlayer.textContent = `Player Wins: ${playerWinCount}`
     console.log(playerWinCount)
 }
 
 function dealerWins() {
     dealerWinCount++
+    winBoxDealer.textContent = `Dealer Wins: ${dealerWinCount}`
     console.log(dealerWinCount)
 }
  

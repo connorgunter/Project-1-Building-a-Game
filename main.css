@@ -88,9 +88,12 @@ button {
 }
 
 .wins-container {
-    display: flex;
-    justify-content: flex-end;
-    border: 2px solid red;
+    border: 1px white solid;
+    margin-left: 800px;
+    font-family: 'Cinzel', serif;
+    color: white;
+    font-size: 30px;
+    
 }
 
 @media only screen and (max-width: 600px) {
@@ -103,17 +106,18 @@ button {
         background-size: cover;
         background-repeat: no-repeat;
         text-align: center;
+        display: grid;
     }
     
     h1 {
         margin-bottom: -10px;
         font-family: 'Cinzel', serif;
         font-size: 58px;
+        text-align: center;
     }
     
     .container {
         display: grid;
-    
     }
     
     button {
@@ -182,5 +186,12 @@ button {
         font-family: 'Courgette', cursive;
         font-size: 35px;
     }
+    .wins-container {
+        margin:0;
+        font-family: 'Cinzel', serif;
+        color: white;
+        font-size: 20px;
+    }
+    
     
 }
