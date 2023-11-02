@@ -179,9 +179,9 @@ function hitBtn() {
         renderDeckInContainer(playerHand, playersContainer) // render the new card on the screen
         playerHandScore += parseInt(playerNewCard.value) // add the value of the new card to the playerhandscore
         playerScoreText.textContent = `Score: ${playerHandScore}` // display the new score
-        if (playerHandTotal() > 21) { // if the player goes over 21, display on screen the player has busted
-            gameResult.textContent = "Busted! Dealer Wins!"
-            //
+        if (playerHandTotal() > 21) { // if the player goes over 21
+            gameResult.textContent = "Busted! Dealer Wins!" // display on screen the player has busted
+            firstCard.classList.remove('back') // show the dealer flipped card
         }
     }else{
         console.log("Blackjack!!!")
@@ -213,7 +213,7 @@ console.log(dealerHandTotal())
 
 function standBtn(event) { // stand button when pressed
     console.log(event.target.innerText) // log it is detecting click
-    firstCard.classList.remove('back')
+    firstCard.classList.remove('back') // flip dealers hidden card over
     function dealerTurn() { // this function is for when the stand button is pressed, initiate dealers turn
         dealerScoreText.style.visibility = 'visible'  
         while (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
@@ -222,7 +222,6 @@ function standBtn(event) { // stand button when pressed
             
         } // if the dealer has 17 or more, compare hands and update the score because the dealer has chose to stand
             compareHands()
-            // updateScore()
         }
         dealerTurn()
     }
@@ -290,5 +289,5 @@ function newDealBtn(event) { // New Deal Button
     dealerHandScore = 0 // reset dealer hand score
     playerHandTotal() // grab new hand total
     dealerHandTotal() // grab new hand total
-    gameResult.textContent = ""
+    gameResult.textContent = "" // reset the game result 
 }

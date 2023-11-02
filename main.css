@@ -89,11 +89,11 @@ button {
 
 .wins-container {
     border: 1px white solid;
-    margin-left: 800px;
     font-family: 'Cinzel', serif;
     color: white;
     font-size: 30px;
-    
+    margin-left: 200px;
+    margin-right: 200px;
 }
 
 @media only screen and (max-width: 600px) {
