@@ -183,8 +183,6 @@ function hitBtn() {
             gameResult.textContent = "Busted! Dealer Wins!" // display on screen the player has busted
             firstCard.classList.remove('back') // show the dealer flipped card
         }
-    }else{
-        console.log("Blackjack!!!")
     }
 }
                                 //PLAYER SCORE AND HIT FUNCTION END //
@@ -223,6 +221,8 @@ function standBtn(event) { // stand button when pressed
         } // if the dealer has 17 or more, compare hands and update the score because the dealer has chose to stand
             compareHands()
         }
+        standButtonEl.removeEventListener('click', standBtn) //disable the stand button after clicked
+        hitButtonEl.removeEventListener('click', hitBtn) // disable the hit button once player stands
         dealerTurn()
     }
 
@@ -289,5 +289,7 @@ function newDealBtn(event) { // New Deal Button
     dealerHandScore = 0 // reset dealer hand score
     playerHandTotal() // grab new hand total
     dealerHandTotal() // grab new hand total
+    hitButtonEl.addEventListener('click', hitBtn) // reinitialize the hit button
+    standButtonEl.addEventListener('click', standBtn) // reinitialize the stand button
     gameResult.textContent = "" // reset the game result 
 }
