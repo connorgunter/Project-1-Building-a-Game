@@ -4,13 +4,13 @@ let playerHand = []
 
 
 // Buttons
-const hitButtonEl = document.querySelector('.hit-button') 
-const standButtonEl = document.querySelector('.stand-button')
-const newDealButton = document.querySelector('.new-deal-button')
-// grabbing the span to display hand total
-const playerScoreText = document.querySelector('.player-score')
-const dealerScoreText = document.querySelector('.dealer-score')
-const gameResult = document.querySelector('.game-result')
+const hitButtonEl = document.querySelector('.hit-button') // caching hit button
+const standButtonEl = document.querySelector('.stand-button') // caching stand button
+const newDealButton = document.querySelector('.new-deal-button') // caching new deal button
+
+const playerScoreText = document.querySelector('.player-score') // caching player score div
+const dealerScoreText = document.querySelector('.dealer-score') // caching dealer score div
+const gameResult = document.querySelector('.game-result') // caching game result div
 // event listeners for buttons
 hitButtonEl.addEventListener('click', hitBtn)
 standButtonEl.addEventListener('click', standBtn)
@@ -37,7 +37,7 @@ function updateWinStreak() {
 const suits = ['s', 'c', 'd', 'h'];
 const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A'];
 
-const originalDeck = buildOriginalDeck();
+const originalDeck = buildOriginalDeck(); // assigning value of buildOriginalDeck to a variable
 
 let shuffledDeck;
 
@@ -59,7 +59,7 @@ function buildOriginalDeck() {
   });
   return deck;
 }
-// console.log(testDeck[0].value)
+
 function getNewShuffledDeck() {
   // Create a copy of the originalDeck (leave originalDeck untouched!)
   const tempDeck = [...originalDeck];
@@ -252,9 +252,9 @@ function newDealBtn(event) { // New Deal Button
     currentDealerHand = renderDealerHand() // rendering starting 2 cards to currentPlayerHand
     const firstCard = document.querySelector('#dealers-container').childNodes[0]
     firstCard.classList.add('back') // flip dealers hidden card over so player can see it  
-    playerHandScore = 0 // 
-    dealerHandScore = 0
-    playerHandTotal() 
-    dealerHandTotal()
+    playerHandScore = 0 // reset player hand score
+    dealerHandScore = 0 // reset dealer hand score
+    playerHandTotal() // grab new hand total
+    dealerHandTotal() // grab new hand total
     gameResult.textContent = ""
 }

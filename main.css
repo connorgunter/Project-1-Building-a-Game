@@ -18,6 +18,11 @@ h1 {
     display: grid;
 }
 
+button {
+    font-size:20px;
+    font-family: 'Cinzel', serif;
+}
+
 .button-wrapper {
     display: flex;
     justify-content: space-evenly;
