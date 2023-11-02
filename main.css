@@ -87,6 +87,12 @@ button {
     font-size: 50px;
 }
 
+.wins-container {
+    display: flex;
+    justify-content: flex-end;
+    border: 2px solid red;
+}
+
 @media only screen and (max-width: 600px) {
     * {
         box-sizing: border-box;
@@ -125,6 +131,7 @@ button {
         border-radius: 15px;
         padding: 10px;
         background-color: blue;
+        color: black;
         width: 20%;
     }
     
@@ -133,6 +140,7 @@ button {
         padding: 10px;
         background-color: white;
         width: 20%;
+        color: black;
     }
     
     .hit-button {
@@ -140,6 +148,7 @@ button {
         border-radius: 15px;
         padding: 10px;
         width: 20%;
+        color: black;
     }
     
     .dealer-cards-p, .player-cards-p {

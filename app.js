@@ -1,7 +1,8 @@
 // Variable declaration
 let dealerHand = []
 let playerHand = []
-
+let playerWinCount = 0
+let dealerWinCount = 0
 
 // Buttons
 const hitButtonEl = document.querySelector('.hit-button') // caching hit button
@@ -39,12 +40,20 @@ init()
 function init() {
     console.log("game is running")
     dealerScoreText.style.visibility = 'hidden'
+    dealerWinCount = 0
+    playerWinCount = 0
 }
 
-function updateWinStreak() {
-   
+function playerWins() {
+    playerWinCount++
+    console.log(playerWinCount)
 }
 
+function dealerWins() {
+    dealerWinCount++
+    console.log(dealerWinCount)
+}
+ 
                             // DEAL CARDS FUNCTIONS //
 /*----- constants -----*/
 // source for deck / shuffled deck
@@ -232,20 +241,26 @@ function dealerHit() { // dealer hit function
 
                 // COMPARE HANDS, GAME OVER, AND NEW DEAL FUNCTIONS //
 function compareHands() {
-    if(dealerHandTotal() <= 21 && dealerHandTotal() > playerHandTotal()){
+    if(dealerHandTotal() < 21 && dealerHandTotal() > playerHandTotal()){
         gameResult.textContent = "Dealer Wins!"
+        dealerWins()
     } else if (dealerHandTotal() > 21) {
         gameResult.textContent = "Dealer Busted! Player Wins!"
+        playerWins()
     }else if (playerHandTotal() > 21) {
         gameResult.textContent = "Player busted! Dealer Wins!"
-    } else if (playerHandTotal() <= 21 && dealerHandTotal() < playerHandTotal()){
+        dealerWins()
+    } else if (playerHandTotal() < 21 && dealerHandTotal() < playerHandTotal()){
         gameResult.textContent = "Player Wins!"
+        playerWins()
     } else if (playerHandTotal() === dealerHandTotal()){
         gameResult.textContent ="Push! (Tie!)"
     } else if (playerHandTotal() === 21 && dealerHandTotal() < 21) {
         gameResult.textContent = "You got BlackJack! Player Wins!"
+        playerWins()
     } else if (dealerHandTotal() === 21 && playerHandTotal() < 21) {
         gameResult.textContent = "Dealer got BlackJack! Player Loses!"
+        dealerWins()
     } else {
         return
     }
