@@ -211,7 +211,6 @@ console.log(dealerHandTotal())
 
 function standBtn(event) { // stand button when pressed
     console.log(event.target.innerText) // log it is detecting click
-    firstCard.classList.remove('back') // flip dealers hidden card over
     function dealerTurn() { // this function is for when the stand button is pressed, initiate dealers turn
         dealerScoreText.style.visibility = 'visible'  
         while (dealerHandTotal() < 17) { // if dealersHandTotal is less than 17
