@@ -7,18 +7,33 @@ let playerHand = []
 const hitButtonEl = document.querySelector('.hit-button') // caching hit button
 const standButtonEl = document.querySelector('.stand-button') // caching stand button
 const newDealButton = document.querySelector('.new-deal-button') // caching new deal button
+const startGameButtonEl = document.querySelector('.start-game-button')
 
 const playerScoreText = document.querySelector('.player-score') // caching player score div
 const dealerScoreText = document.querySelector('.dealer-score') // caching dealer score div
 const gameResult = document.querySelector('.game-result') // caching game result div
+const gameBoard = document.querySelector('.container')
+const startScreen = document.querySelector('.start-screen')
 // event listeners for buttons
+
 hitButtonEl.addEventListener('click', hitBtn)
 standButtonEl.addEventListener('click', standBtn)
 newDealButton.addEventListener('click', newDealBtn)
+startGameButtonEl.addEventListener('click', startGame)
+
 //
+
+gameBoard.style.visibility = 'hidden'
+startScreen.style.visibility = 'visible'
 
 
 // functions 
+
+function startGame() {
+    gameBoard.style.visibility = 'visible'
+    startGameButtonEl.setAttribute('hidden', '')
+}
+
 init()
 
 function init() {
