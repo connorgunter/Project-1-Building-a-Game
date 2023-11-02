@@ -3,7 +3,7 @@
 }
 
 body {
-    background-image: url(./images/BlackJack-BG.jpeg);
+    background-image: url("./images/BlackJack-BG.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
