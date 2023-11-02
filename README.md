@@ -1,7 +1,7 @@
 # Project-1-Building-a-Game
 Title: BlackJack
-Description: 
-In the game of Blackjack, the player and dealer both start with two cards each, with one of the dealer's cards face down. The goal is to achieve a score of 21 or lower by adding the values of your current cards. The player decides whether to request another card (hit) or stand with their current cards. The "stand" button signals the dealer to make their move, either by hitting if needed or standing, which ends the round. The dealer always stands if their cards total 17 or more. If the player or dealer reaches 21, they achieve a blackjack and win automatically unless the other also has 21, resulting in a push. If a player or dealer goes over 21 after hitting, it's considered a bust and results in a loss for the one who busted. If no one reaches 21 or busts, the one with the highest total wins.
+
+Description: In the game of Blackjack, the player and dealer both start with two cards each, with one of the dealer's cards face down. The goal is to achieve a score of 21 or lower by adding the values of your current cards. The player decides whether to request another card (hit) or stand with their current cards. The "stand" button signals the dealer to make their move, either by hitting if needed or standing, which ends the round. The dealer always stands if their cards total 17 or more. If the player or dealer reaches 21, they achieve a blackjack and win automatically unless the other also has 21, resulting in a push. If a player or dealer goes over 21 after hitting, it's considered a bust and results in a loss for the one who busted. If no one reaches 21 or busts, the one with the highest total wins.
 
 Start Game Screen:
 The player initiates the game by clicking the "Start Game" button when ready to receive their initial hand.
@@ -29,4 +29,3 @@ Future features: Wagering System, Multi-Hand gameplay
 
 Game Credits: Connor Gunter
 All code written by: Connor Gunter
->>>>>>> 670ad8233dae846e1c1da718c162a89d664a8bbf
